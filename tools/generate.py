@@ -250,11 +250,15 @@ def generate(args):
     n_exits = int(float(len(exits)) / float(len(relays)) * args.nrelays)
     n_middles = int(float(len(middles)) / float(len(relays)) * args.nrelays)
 
+    print(len(exits))
+    print(n_exits)
+
     exitguards_nodes = getRelays(exitguards, n_exitguards, geoentries, args.descriptors, args.extrainfos, validyear, validmonth)
     guards_nodes = getRelays(guards, n_guards, geoentries, args.descriptors, args.extrainfos, validyear, validmonth)
     exits_nodes = getRelays(exits, n_exits, geoentries, args.descriptors, args.extrainfos, validyear, validmonth)
     middles_nodes = getRelays(middles, n_middles, geoentries, args.descriptors, args.extrainfos, validyear, validmonth)
 
+    print(len(exits_nodes))
     # get the fastest nodes at the front
     exitguards_nodes.reverse()
     guards_nodes.reverse()
@@ -495,7 +499,7 @@ def generate(args):
     i = 1
     while i <= nwebclients:
         name = "webclient{0}".format(i)
-        starttime = "{0}".format(int(round(clientStartTime)))
+        starttime = "900"##"{0}".format(int(round(clientStartTime)))
         torargs = "{0} -f conf/tor.client.torrc".format(default_tor_args) # in bytes
         tgenargs = "conf/tgen.torwebclient.graphml.xml"
 
@@ -507,7 +511,7 @@ def generate(args):
     i = 1
     while i <= nbulkclients:
         name = "bulkclient{0}".format(i)
-        starttime = "{0}".format(int(round(clientStartTime)))
+        starttime = "900" ##"{0}".format(int(round(clientStartTime)))
         torargs = "{0} -f conf/tor.client.torrc".format(default_tor_args) # in bytes
         tgenargs = "conf/tgen.torbulkclient.graphml.xml"
 
