@@ -1066,12 +1066,10 @@ def generate_tgen_filetransfer_clients(servers):
     G = DiGraph()
 
     G.add_node("start", socksproxy="localhost:9000", serverport="8888", peers=servers)
-    G.add_node("transfer", type="get", protocol="tcp", size="320 KiB")
-    G.add_node("pause", time="1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60")
-
+    G.add_node("transfer", type="put", protocol="tcp", size="120 KiB", sendRate="12", timeout="60 seconds")
     G.add_edge("start", "transfer")
-    G.add_edge("transfer", "pause")
-    G.add_edge("pause", "start")
+    G.add_edge("transfer", "start")
+    
 
     write_graphml(G, "conf/tgen.torwebclient.graphml.xml")
 
@@ -1079,10 +1077,21 @@ def generate_tgen_filetransfer_clients(servers):
     G = DiGraph()
 
     G.add_node("start", socksproxy="localhost:9000", serverport="8888", peers=servers)
-    G.add_node("transfer", type="get", protocol="tcp", size="5 MiB")
+    G.add_node("transfermorning", type="put", protocol="tcp", size="120 KiB", timeout="60 seconds")
+    G.add_node("transferlunch", type="put", protocol="tcp", size="120 KiB", timeout="60 seconds")
+    G.add_node("transferevening", type="put", protocol="tcp", size="120 KiB", timeout="60 seconds")
 
-    G.add_edge("start", "transfer")
-    G.add_edge("transfer", "start")
+    G.add_node("pause1", time="750,751,752,753,754,755,756,757,758,759,760,761,762,763,764,765,766,767,768,769,770,771,772,773,774,775,776,777,778,779,780,781,782,783,784,785,786,787,788,789,790,791,792,793,794,795,796,797,798,799,800,801,802,803,804,805,806,807,808,809,810,811,812,813,814,815,816,817,818,819,820,821,822,823,824,825,826,827,828,829,830,831,832,833,834,835,836,837,838,839,840,841,842,843,844,845,846,847,848,849,850")
+    G.add_node("pause2", time="350,351,352,353,354,355,356,357,358,359,360,361,362,363,364,365,366,367,368,369,370,371,372,373,374,375,376,377,378,379,380,381,382,383,384,385,386,387,388,389,390,391,392,393,394,395,396,397,398,399,400,401,402,403,404,405,406,407,408,409,410,411,412,413,414,415,416,417,418,419,420,421,422,423,424,425,426,427,428,429,430,431,432,433,434,435,436,437,438,439,440,441,442,443,444,445,446,447,448,449,450")
+    G.add_node("pause3", time="450,451,452,453,454,455,456,457,458,459,460,461,462,463,464,465,466,467,468,469,470,471,472,473,474,475,476,477,478,479,480,481,482,483,484,485,486,487,488,489,490,491,492,493,494,495,496,497,498,499,500,501,502,503,504,505,506,507,508,509,510,511,512,513,514,515,516,517,518,519,520,521,522,523,524,525,526,527,528,529,530,531,532,533,534,535,536,537,538,539,540,541,542,543,544,545,546,547,548,549,550")
+    G.add_edge("start", "pause1")
+    G.add_edge("pause1", "transfermorning")
+    G.add_edge("pause2", "transferlunch")
+    G.add_edge("pause3", "transferevening")
+
+    G.add_edge("transfermorning", "pause2")
+    G.add_edge("transferlunch", "pause3")
+    G.add_edge("transferevening", "end")
 
     write_graphml(G, "conf/tgen.torbulkclient.graphml.xml")
 
