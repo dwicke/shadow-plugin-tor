@@ -204,8 +204,6 @@ def main():
     args.connectingusers = os.path.abspath(os.path.expanduser(args.connectingusers))
     args.geoippath = os.path.abspath(os.path.expanduser(args.geoippath))
 
-    INSTALLPREFIX = args.prefix
-
 
     args.torbin = which("tor")
     args.torgencertbin = which("tor-gencert")
@@ -307,7 +305,7 @@ def generate(args):
 
     with open("conf/shadowresolv.conf", "wb") as f: print >>f, "nameserver 127.0.0.1"
 
-    default_tor_args = "--Address ${NODEID} --Nickname ${NODEID} --DataDirectory shadow.data/hosts/${NODEID} --GeoIPFile "+INSTALLPREFIX+"share/geoip --defaults-torrc conf/tor.common.torrc"
+    default_tor_args = "--Address ${NODEID} --Nickname ${NODEID} --DataDirectory shadow.data/hosts/${NODEID} --GeoIPFile "+args.prefix+"share/geoip --defaults-torrc conf/tor.common.torrc"
 
     # tor directory authorities - choose the fastest relays (no authority is an exit node)
     dirauths = [] # [name, v3ident, fingerprint] for torrc files
@@ -569,28 +567,28 @@ def generate(args):
 
         e = etree.Element("plugin")
         e.set("id", "tgen")
-        e.set("path", "{0}plugins/libshadow-plugin-tgen.so".format(INSTALLPREFIX))
+        e.set("path", "{0}plugins/libshadow-plugin-tgen.so".format(args.prefix))
         root.insert(0, e)
 
         # TODO enable when torflow works
         #e = etree.Element("plugin")
         #e.set("id", "torflow")
-        #e.set("path", "{0}plugins/libshadow-plugin-torflow.so".format(INSTALLPREFIX))
+        #e.set("path", "{0}plugins/libshadow-plugin-torflow.so".format(args.prefix))
         #root.insert(0, e)
 
         e = etree.Element("plugin")
         e.set("id", "torctl")
-        e.set("path", "{0}plugins/libshadow-plugin-torctl.so".format(INSTALLPREFIX))
+        e.set("path", "{0}plugins/libshadow-plugin-torctl.so".format(args.prefix))
         root.insert(0, e)
 
         e = etree.Element("plugin")
         e.set("id", "tor")
-        e.set("path", "{0}plugins/libshadow-plugin-tor.so".format(INSTALLPREFIX))
+        e.set("path", "{0}plugins/libshadow-plugin-tor.so".format(args.prefix))
         root.insert(0, e)
 
         # internet topology map
         e = etree.Element("topology")
-        e.set("path", "{0}share/topology.graphml.xml".format(INSTALLPREFIX))
+        e.set("path", "{0}share/topology.graphml.xml".format(args.prefix))
         root.insert(0, e)
 
         # kill time
