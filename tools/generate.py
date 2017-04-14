@@ -204,6 +204,9 @@ def main():
     args.connectingusers = os.path.abspath(os.path.expanduser(args.connectingusers))
     args.geoippath = os.path.abspath(os.path.expanduser(args.geoippath))
 
+    INSTALLPREFIX = args.prefix
+
+
     args.torbin = which("tor")
     args.torgencertbin = which("tor-gencert")
     if args.torbin is None or args.torgencertbin is None:
