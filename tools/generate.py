@@ -500,7 +500,7 @@ def generate(args):
     i = 1
     while i <= nwebclients:
         name = "webclient{0}".format(i)
-        starttime = "900"##"{0}".format(int(round(clientStartTime)))
+        starttime = "700"##"{0}".format(int(round(clientStartTime)))
         torargs = "{0} -f conf/tor.client.torrc".format(default_tor_args) # in bytes
         tgenargs = "conf/tgen.torwebclient.graphml.xml"
 
@@ -512,7 +512,7 @@ def generate(args):
     i = 1
     while i <= nbulkclients:
         name = "bulkclient{0}".format(i)
-        starttime = "900" ##"{0}".format(int(round(clientStartTime)))
+        starttime = "700" ##"{0}".format(int(round(clientStartTime)))
         torargs = "{0} -f conf/tor.client.torrc".format(default_tor_args) # in bytes
         tgenargs = "conf/tgen.torbulkclient.graphml.xml"
 
@@ -593,7 +593,7 @@ def generate(args):
 
         # kill time
         e = etree.Element("kill")
-        e.set("time", "3600")
+        e.set("time", "1240")
         root.insert(0, e)
 
         # all our hosts
@@ -1082,9 +1082,9 @@ def generate_tgen_filetransfer_clients(servers):
     G.add_node("transferlunch", type="put", protocol="tcp", size="600 KiB", timeout="60 seconds")
     G.add_node("transferevening", type="put", protocol="tcp", size="600 KiB", timeout="60 seconds")
 
-    G.add_node("pause1", time="800")
-    G.add_node("pause2", time="400")
-    G.add_node("pause3", time="500")
+    G.add_node("pause1", time="80")
+    G.add_node("pause2", time="40")
+    G.add_node("pause3", time="50")
     G.add_edge("start", "pause1")
     G.add_edge("pause1", "transfermorning")
     G.add_edge("pause2", "transferlunch")
