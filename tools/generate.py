@@ -1077,14 +1077,19 @@ def generate_tgen_filetransfer_clients(servers):
     # bulkclients
     G = DiGraph()
 
-    G.add_node("start", socksproxy="localhost:9000", serverport="8888", peers=servers)
+    G.add_node("start", socksproxy="localhost:9000", serverport="8888", peers=servers, percentServer="0.025")
     G.add_node("transfermorning", type="put", protocol="tcp", size="600 KiB", timeout="60 seconds")
     G.add_node("transferlunch", type="put", protocol="tcp", size="600 KiB", timeout="60 seconds")
     G.add_node("transferevening", type="put", protocol="tcp", size="600 KiB", timeout="60 seconds")
 
-    G.add_node("pause1", time="80")
-    G.add_node("pause2", time="40")
-    G.add_node("pause3", time="50")
+    # G.add_node("pause1", time="80")
+    # G.add_node("pause2", time="40")
+    # G.add_node("pause3", time="50")
+    G.add_node("pause1", time="75,76,77,78,79,80,81,82,83,84,85")
+    G.add_node("pause2", time="35,36,36,37,38,39,40,41,42,43,44,45")
+    G.add_node("pause3", time="45,46,47,48,49,50,51,52,53,54,55")
+
+
     G.add_edge("start", "pause1")
     G.add_edge("pause1", "transfermorning")
     G.add_edge("pause2", "transferlunch")
